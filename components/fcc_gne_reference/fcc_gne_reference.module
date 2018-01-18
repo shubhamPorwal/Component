@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Module containing GNE Reference component.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function fcc_gne_reference_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
+/**
+ * Get the default settings for the component.
+ */
+function fcc_gne_reference_get_settings() {
+  $defaults = [
+    'title' => 'Your Title',
+    'subtitle' => '',
+    'style' => '',
+    'modifiers' => FALSE,
+    'base_class' => 'gne-reference',
+    'sub_class' => '',
+    'title_tag' => 'div',
+  ];
+  return $defaults;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fcc_gne_reference_theme($existing, $type, $theme, $path) {
+  $theme = array();
+  $theme['gne_reference_style'] = array(
+    'template' => 'gne-reference',
+    'path' => drupal_get_path('module', 'fcc_gne_reference') . '/templates',
+    'variables' => array('config' => NULL),
+   );
+  return $theme;
+}
+
+/**
+ * Implements hook_preprocess_theme().
+ */
+function fcc_gne_reference_preprocess_gne_reference_style(&$variables) {
+
+  // Update variables with defaults.
+  $variables['config'] = array_merge(fcc_gne_reference_get_settings(), $variables['config']);
+  // Add theme suggestion based on style selected.
+  $variables['theme_hook_suggestions'][] = 'gne_reference';
+}

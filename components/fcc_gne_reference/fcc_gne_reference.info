@@ -1,0 +1,5 @@
+name = FCC GNE Reference
+description = This component display GNE reference value if its a "One way airfare" product.
+package = FCL Components
+core = 7.x
+version = "7.x-1.1"
